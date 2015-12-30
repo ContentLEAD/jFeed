@@ -43,11 +43,24 @@ jQuery(function() {
                 
                 html += '<div class="updated">'
                 + item.updated
+                + '</div>'
+                + '<div class="category">'
+                + '<strong>Category:</strong>&nbsp;'
+                + item.category
+                //+ '</div>'
+                //+ '<div class="author">'
+                //+ item.author
                 + '</div>';
                 
                 html += '<div>'
                 + item.description
                 + '</div>';
+
+                html += '<div class="image">'
+                + '<img src="'
+                + item.image
+                + '" />'
+                + '</div>'
             }
             
             jQuery('#result').append(html);
