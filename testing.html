@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="jquery/jquery.js"></script>
+        <script>
+            var date = new Date("Wed, 30 Jan 2015 20:50:59 +0000");
+            console.log(date);
+            console.log(date.getMonth() + 1);
+            console.log(date.getDate());
+            console.log(date.getFullYear());
+            var fullmonths = ["january", "feb"];
+            console.log(fullmonths[date.getMonth()]);
+            
+            function getformatdate(date, format){
+                var formats = {
+                     "M" : fullmonths[date.getMonth()],
+                     "d" : date.getDate(),
+                     "Y" : date.getFullYear()
+                }
+                
+                var format = format.split(' ');
+                var string = '';
+                $.map(format, function(n,e){
+                  string = string + formats.getPrototypeOf(n) + " " ;
+                });
+                return string;
+            }
+            var defaultDate = getformatdate(date, "M d , Y");
+            console.log(defaultDate);
+        </script>
+    </head>
+</html>
