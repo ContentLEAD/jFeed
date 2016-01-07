@@ -13,9 +13,6 @@ JRss.prototype  = {
     
         this.title = jQuery(channel).find('title:first').text();
         this.link = jQuery(channel).find('link:first').text();
-        this.category = jQuery(channel).find('category:first').text();
-        //Not sure what's happening here or if we should even add this field
-        //this.author = jQuery(channel).find('[nodeName=dc:creator]').text();
         this.description = jQuery(channel).find('description:first').text();
         this.language = jQuery(channel).find('language:first').text();
         this.updated = jQuery(channel).find('lastBuildDate:first').text();
@@ -32,13 +29,16 @@ JRss.prototype  = {
             item.title = jQuery(this).find('title').eq(0).text();
             item.link = jQuery(this).find('link').eq(0).text();
             item.category = jQuery(this).find('category').eq(0).text();
-            //item.author = jQuery(this).find('[nodeName=dc:creator]').eq(0).text(0);
+            item.author = jQuery(this).find('creator').eq(0).text();
             item.description = jQuery(this).find('description').eq(0).text();
-            item.updated = jQuery(this).find('pubDate').eq(0).text();
+            var date = new Date(jQuery(this).find('pubDate').eq(0).text());
+                item.defaultdate = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
+                item.updated = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
             item.id = jQuery(this).find('guid').eq(0).text();
             item.image = jQuery(this).find('enclosure').attr('url');
             
             feed.items.push(item);
+
         });
     }
 };
