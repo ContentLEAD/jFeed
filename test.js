@@ -6,6 +6,7 @@ $("#div").Brss(
     {
         url: "rss feed url",
         Dateformat: "aussie",
+        customDate: "m y y ",
         template: "",
         image: true|false,
         title: "",

@@ -28,6 +28,7 @@ JRss.prototype  = {
         jQuery('item', xml).each( function() {
         
             var item = new JFeedItem();
+            var customFormat = object.customDateFormat;
             
             item.title = jQuery(this).find('title').eq(0).text();
             item.link = jQuery(this).find('link').eq(0).text();
@@ -35,6 +36,9 @@ JRss.prototype  = {
             //item.author = jQuery(this).find('[nodeName=dc:creator]').eq(0).text(0);
             item.description = jQuery(this).find('description').eq(0).text();
             item.updated = jQuery(this).find('pubDate').eq(0).text();
+            var mydate = jQuery(this).find('pubDate').eq(0).text();
+            item.customDateFormat = mydate.getformat(customFormat);
+            
             item.id = jQuery(this).find('guid').eq(0).text();
             item.image = jQuery(this).find('enclosure').attr('url');
             
