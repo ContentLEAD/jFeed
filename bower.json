@@ -1,0 +1,22 @@
+{
+  "name": "jFeed",
+  "homepage": "https://github.com/ContentLEAD/jFeed",
+  "authors": [
+    "dking3876 <dking3876@msn.com>"
+  ],
+  "description": "XML parser for RSS feeds",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "rss"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

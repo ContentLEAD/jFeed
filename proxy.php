@@ -1,4 +1,5 @@
 <?php
+header('Access-Control-Allow-Origin: *');
 header('Content-type: application/xml');
 $handle = fopen($_REQUEST['url'], "r");
 

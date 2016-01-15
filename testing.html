@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="jquery/jquery.js"></script>
+        <script>
+            var date = new Date("Wed, 30 Jan 2015 20:50:59 +0000");
+            console.log(date);
+            console.log(date.getMonth() + 1);
+            console.log(date.getDate());
+            console.log(date.getFullYear());
+            fullmonths = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            shortmonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+            console.log(fullmonths[date.getMonth()]);
+            
+            $.fn.extend(
+                {
+                    getformatdate: function(format){
+                        console.log(this);
+                var formats = {
+                     "M" : fullmonths[this[0].getMonth()],
+                     "m" : shortmonths[this[0].getMonth()],
+                     "d" : this[0].getDate(),
+                     "Y" : this[0].getFullYear()
+                }
+                
+                var format = format.split(' ');
+                var string = '';
+                $.map(format, function(n,e){
+                  string = string + (formats[n] != undefined? formats[n] : n) + " " ;
+                });
+                
+                return string;
+            }
+            });
+            var defaultDate = $(date).getformatdate("M d , Y");
+            console.log(defaultDate);
+        </script>
+    </head>
+</html>
