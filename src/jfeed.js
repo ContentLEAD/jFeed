@@ -14,7 +14,8 @@ jQuery.getFeed = function(options) {
         success: null,
         failure: null,
         error: null,
-        global: true
+        global: true,
+        dateformat: 'abbreviated',
 
     }, options);
 
@@ -45,13 +46,24 @@ jQuery.getFeed = function(options) {
             error: options.error,
             global: options.global
         });
+
+        if (options.dateformat) {
+
+            var date = new Date(jQuery(this).find('pubDate').eq(0).text());
+
+            switch (options.dateformat) {
+                case 'abbreviated':
+                    item.updated = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
+                    break;
+            }
+
+        }
     }
 };
 
 function JFeed(xml) {
     if (xml) this.parse(xml);
-}
-;
+};
 
 JFeed.prototype = {
 

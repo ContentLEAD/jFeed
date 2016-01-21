@@ -17,6 +17,8 @@ jQuery(function() {
     jQuery.getFeed({
 
         url: 'http://www.brafton.com/blog/feed/',
+        image: 'true',
+
         success: function(feed) {
         
             jQuery('#result').append('<h2>'
@@ -29,11 +31,11 @@ jQuery(function() {
             
             var html = '';
             
-            for(var i = 0; i < feed.items.length && i < 5; i++) {
+            for(var i = 0; i < feed.items.length && i < 6; i++) {
             
                 var item = feed.items[i];
                 
-                html += '<h3>'
+                html += '<div class="item"><h3>'
                 + '<a href="'
                 + item.link
                 + '">'
@@ -49,18 +51,23 @@ jQuery(function() {
                 + item.category
                 + '</div>'
                 + '<div class="author">'
+                + '<strong>Author:</strong>&nbsp;'
                 + item.author
                 + '</div>';
                 
-                html += '<div>'
+                html += '<div class="desc">'
                 + item.description
                 + '</div>';
-
+                
                 html += '<div class="image">'
+                + '<a href="'
+                + item.link
+                + '">'
                 + '<img src="'
                 + item.image
                 + '" />'
-                + '</div>'
+                + '</a>'
+                + '</div></div>'
             }
             
             jQuery('#result').append(html);
@@ -70,11 +77,53 @@ jQuery(function() {
 
 </script>
 
+<style>
+
+    body {
+        font-family: Arial;
+        line-height: 125%;
+        color: #111;
+    }
+
+    a {
+        color: gray;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    a:hover {
+        color: #444;
+    }
+    .item {
+        width: 33.3%;
+        padding: 25px;
+        box-sizing: border-box;
+        float: left;
+        height: 100%;
+    }
+        .item:nth-of-type(odd) {
+            border-top: 8px solid #eee;
+        }
+        .item:nth-of-type(even) {
+            border-top: 8px solid #ddd;
+        }
+        .item:nth-of-type(4) {
+            clear: both;
+        }
+
+    .item img {
+        max-width: 100%;
+        box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+    }
+    .desc {
+        margin: 15px 0px;
+    }
+
+</style>
+
 </head>
 
 <body>
 
-<h1>Oh hey</h1>
 <div id="result"></div>
 
 </body>

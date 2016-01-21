@@ -31,9 +31,7 @@ JRss.prototype  = {
             item.category = jQuery(this).find('category').eq(0).text();
             item.author = jQuery(this).find('creator').eq(0).text();
             item.description = jQuery(this).find('description').eq(0).text();
-            var date = new Date(jQuery(this).find('pubDate').eq(0).text());
-                item.defaultdate = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
-                item.updated = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
+            item.updated = jQuery(this).find('pubDate').eq(0).text();
             item.id = jQuery(this).find('guid').eq(0).text();
             item.image = jQuery(this).find('enclosure').attr('url');
             
