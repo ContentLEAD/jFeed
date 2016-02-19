@@ -9,6 +9,6 @@ JFeedItem.prototype = {
     category: '',
     id: '',
     image: '',
-    //author: '',
+    author: '',
 };
 

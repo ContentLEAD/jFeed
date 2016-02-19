@@ -4,23 +4,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>jFeed - jQuery feed parser plugin - example</title>
+
 <style type="text/css">
     h3 { margin-bottom: 5px; }
     div.updated { color: #999; margin-bottom: 5px; font-size: 0.8em; }
 </style>
+
 <script type="text/javascript" src="jquery/jquery.js"></script>
-<script type="text/javascript" src="build/dist/jquery.jfeed.pack.js"></script>
+<script type="text/javascript" src="src/jfeed.js"></script>
+<script type="text/javascript" src="src/jfeeditem.js"></script>
+<script type="text/javascript" src="src/jatom.js"></script>
+<script type="text/javascript" src="src/jrss.js"></script>
 
 <script type="text/javascript">
 $.fn.extend({
     BraftonRss: function(obj){
         obj.container = this;
         jQuery.getFeed({
-        url: obj.url,
+        url: 'http://tech.brafton.com/brss/proxy.php?url=' + obj.url,
         dateformat: obj.dateformat,
         container: obj.container,
+        image: obj.image,
+        date: obj.date,
+        category: obj.category,
+        author: obj.author,
         success: function(feed) {
-            console.log(this.dateformat);
             this.container.append('<h2>'
             + '<a href="'
             + feed.link
@@ -42,14 +50,53 @@ $.fn.extend({
                 + item.title
                 + '</a>'
                 + '</h3>';
-                
-                html += '<div class="updated">'
-                + item.updated
-                + '</div>';
-                
+
+                if(this.date) {
+                    switch (this.dateformat) {
+                        case 'shortdate':
+                            console.log(this.dateformat);
+                            html += '<div class="updated">'
+                            + item.shortdate
+                            + '</div>';
+                            break;
+                        default:
+                            html += '<div class="updated">'
+                            + item.updated
+                            + '</div>';
+                            break;
+                    }
+                }
+
+                if(this.category) {
+                    html += '<div class="category">'
+                    + '<strong>Category:</strong>&nbsp;'
+                    + item.category
+                    + '</div>'
+                }
+
+                if(this.author) {
+                    html += '<div class="author">'
+                    + '<strong>Author:</strong>&nbsp;'
+                    + item.author
+                    + '</div>';
+                }
+
+                if(this.image) {
+                    html += '<div class="image">'
+                    + '<a target="_blank" href="'
+                    + item.link
+                    + '">'
+                    + '<img src="'
+                    + item.image
+                    + '" />'
+                    + '</a>'
+                    + '</div></div>';
+                }
+
                 html += '<div>'
-                + item.description
-                + '</div>';
+                    + item.description
+                    + '</div>';
+
             }
             
             jQuery('#result').append(html);
@@ -59,8 +106,12 @@ $.fn.extend({
 });
 jQuery(function() {
     $("#result").BraftonRss({
-               url: 'xml/rss-20.xml',
-        dateformat: "mydateformat"
+               url: 'http://www.brafton.com/blog/feed/',
+        dateformat: "shortdate",
+             image: true,
+              date: true,
+          category: true,
+            author: true
     });
 });
 

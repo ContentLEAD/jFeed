@@ -6,17 +6,28 @@
 
 jQuery.getFeed = function(options) {
 
+    //jQuery(this).find(pubDate).each(function() {
+        // switch (options.dateformat) {
+            //case 'short':
+                //pubDate = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
+            //break;
+        //}
+        //console.log('date: ' + pubDate);
+    //});
+
     options = jQuery.extend({
 
         url: null,
         data: null,
-        cache: true,
+        cache: false,
         success: null,
         failure: null,
         error: null,
         global: true,
-        dateformat: 'abbreviated',
-
+        ShowPubDate: true,
+        DateFormat: null,
+        image: null,
+        
     }, options);
 
     if (options.url) {
@@ -47,18 +58,14 @@ jQuery.getFeed = function(options) {
             global: options.global
         });
 
-        if (options.dateformat) {
+        //if (options.ShowPubDate){
+            //Date = new Date(item.updated);
+            //if (jQuery.trim(this.DateFormat).length > 0) {
+            //};
+        //}
 
-            var date = new Date(jQuery(this).find('pubDate').eq(0).text());
-
-            switch (options.dateformat) {
-                case 'abbreviated':
-                    item.updated = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
-                    break;
-            }
-
-        }
     }
+
 };
 
 function JFeed(xml) {

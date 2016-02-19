@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>jFeed - jQuery feed parser plugin - test</title>
+<title>bRss</title>
 <script type="text/javascript" src="jquery/jquery.js"></script>
 <script type="text/javascript" src="src/jfeed.js"></script>
 <script type="text/javascript" src="src/jfeeditem.js"></script>
@@ -16,8 +16,9 @@ jQuery(function() {
 
     jQuery.getFeed({
 
-        url: 'http://www.brafton.com/blog/feed/',
-        image: 'true',
+        url: 'xml/rss-10.xml',
+        DateFormat: 'short',
+        image: true,
 
         success: function(feed) {
         
@@ -36,15 +37,27 @@ jQuery(function() {
                 var item = feed.items[i];
                 
                 html += '<div class="item"><h3>'
-                + '<a href="'
+                + '<a target="_blank" href="'
                 + item.link
                 + '">'
                 + item.title
                 + '</a>'
                 + '</h3>';
                 
+                var date; 
+
+                switch (this.DateFormat) {
+                    case 'short':
+                        date = item.abbreviated;
+                        //item.updated = (Date.getMonth()+1) + '/' + Date.getDate() + '/' + Date.getFullYear();
+                        break;
+                    default: 
+                        date = item.updated;
+                        break;
+                };
+
                 html += '<div class="updated">'
-                + item.updated
+                + date
                 + '</div>'
                 + '<div class="category">'
                 + '<strong>Category:</strong>&nbsp;'
@@ -58,16 +71,18 @@ jQuery(function() {
                 html += '<div class="desc">'
                 + item.description
                 + '</div>';
+
+                
                 
                 html += '<div class="image">'
-                + '<a href="'
+                + '<a target="_blank" href="'
                 + item.link
                 + '">'
                 + '<img src="'
                 + item.image
                 + '" />'
                 + '</a>'
-                + '</div></div>'
+                + '</div></div>';
             }
             
             jQuery('#result').append(html);
@@ -76,6 +91,57 @@ jQuery(function() {
 });
 
 </script>
+
+<!--<script type="text/javascript">
+
+
+(function($){
+    jQuery.fn.extend({
+
+        // Plugin Name
+        bRss: function(options) {
+            
+            // Defaults options are set here
+            // Every default goes within the { } brackets as seen below
+            // A comma separates the different values
+            var defaults = {  
+                property: "border",
+                value: "3px solid red", 
+                dateformat: 'short'
+            };  
+            var options = $.extend(defaults, options);  
+            
+            return this.each(function() {   
+            
+                // Add 'options.' before the value 
+                // This is done to inform jQuery it is part of the default options
+                jQuery(this).css(options.property, options.value);
+
+                var item = new JFeedItem();
+
+                switch (options.dateformat) {
+                    case 'short':
+                        item.updated = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
+                    break;
+                }
+                console.log('date: ' + item.updated);
+            
+            });
+
+        }
+
+    });
+})(jQuery); 
+
+</script>-->
+
+<!--<script type="text/javascript">
+$(document).ready(function(){                  
+
+    $("#result").bRss();
+
+}); 
+</script>-->
 
 <style>
 
@@ -112,7 +178,6 @@ jQuery(function() {
 
     .item img {
         max-width: 100%;
-        box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
     }
     .desc {
         margin: 15px 0px;
