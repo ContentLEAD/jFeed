@@ -6,6 +6,7 @@
 <title>jFeed - jQuery feed parser plugin - example</title>
 
 <style type="text/css">
+    body {font-family: arial;}
     h3 { margin-bottom: 5px; }
     div.updated { color: #999; margin-bottom: 5px; font-size: 0.8em; }
 </style>
@@ -28,7 +29,21 @@ $.fn.extend({
         date: obj.date,
         category: obj.category,
         author: obj.author,
+        container: obj.container,
+        style: obj.style,
         success: function(feed) {
+
+            var html = '';
+
+            switch (this.style) {
+                case 'grid':
+                    html += '<style type="text/css">.item {float: left; width: 33.3%; padding: 0px 10px; box-sizing: border-box;} .item img {max-width: 100%;}</style>'   
+                    break;
+                default:
+                    html += ''
+                    break;
+                }
+
             this.container.append('<h2>'
             + '<a href="'
             + feed.link
@@ -37,13 +52,11 @@ $.fn.extend({
             + '</a>'
             + '</h2>');
             
-            var html = '';
-            
-            for(var i = 0; i < feed.items.length && i < 5; i++) {
+            for(var i = 0; i < feed.items.length && i < 3; i++) {
             
                 var item = feed.items[i];
                 
-                html += '<h3>'
+                html += '<div class="item"><h3>'
                 + '<a href="'
                 + item.link
                 + '">'
@@ -68,14 +81,14 @@ $.fn.extend({
                 }
 
                 if(this.category) {
-                    html += '<div class="category">'
+                    html += '<div class="category hide">'
                     + '<strong>Category:</strong>&nbsp;'
                     + item.category
                     + '</div>'
                 }
 
                 if(this.author) {
-                    html += '<div class="author">'
+                    html += '<div class="author hide">'
                     + '<strong>Author:</strong>&nbsp;'
                     + item.author
                     + '</div>';
@@ -90,12 +103,12 @@ $.fn.extend({
                     + item.image
                     + '" />'
                     + '</a>'
-                    + '</div></div>';
+                    + '</div>';
                 }
 
                 html += '<div>'
                     + item.description
-                    + '</div>';
+                    + '</div></div>';
 
             }
             
@@ -107,11 +120,13 @@ $.fn.extend({
 jQuery(function() {
     $("#result").BraftonRss({
                url: 'http://www.brafton.com/blog/feed/',
+         container: 'brss',
         dateformat: "shortdate",
              image: true,
               date: true,
           category: true,
-            author: true
+            author: true,
+             style: 'grid'
     });
 });
 
