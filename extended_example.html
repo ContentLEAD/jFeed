@@ -29,11 +29,20 @@ $.fn.extend({
         date: obj.date,
         category: obj.category,
         author: obj.author,
-        container: obj.container,
+        description: obj.description,
+        wrapper: obj.wrapper,
+        wrappername: obj.wrappername,
         style: obj.style,
+        count: obj.count,
         success: function(feed) {
 
             var html = '';
+
+            if (this.wrapper) {
+                html += '<div class="'
+                + this.wrappername
+                + '">';
+            }
 
             switch (this.style) {
                 case 'grid':
@@ -52,7 +61,7 @@ $.fn.extend({
             + '</a>'
             + '</h2>');
             
-            for(var i = 0; i < feed.items.length && i < 3; i++) {
+            for(var i = 0; i < feed.items.length && i < this.count; i++) {
             
                 var item = feed.items[i];
                 
@@ -67,7 +76,6 @@ $.fn.extend({
                 if(this.date) {
                     switch (this.dateformat) {
                         case 'shortdate':
-                            console.log(this.dateformat);
                             html += '<div class="updated">'
                             + item.shortdate
                             + '</div>';
@@ -84,7 +92,7 @@ $.fn.extend({
                     html += '<div class="category hide">'
                     + '<strong>Category:</strong>&nbsp;'
                     + item.category
-                    + '</div>'
+                    + '</div>';
                 }
 
                 if(this.author) {
@@ -106,13 +114,20 @@ $.fn.extend({
                     + '</div>';
                 }
 
-                html += '<div>'
-                    + item.description
-                    + '</div></div>';
+                if (this.description) {
+                    html += '<div>'
+                        + item.description
+                        + '</div>';
+                }
 
+                html += '</div>'
             }
             
             jQuery('#result').append(html);
+
+            if (this.container) {
+                html += '</div';
+            }
         }    
     });
 }
@@ -120,13 +135,16 @@ $.fn.extend({
 jQuery(function() {
     $("#result").BraftonRss({
                url: 'http://www.brafton.com/blog/feed/',
-         container: 'brss',
+           wrapper: true,
+       wrappername: 'brss',
         dateformat: "shortdate",
              image: true,
               date: true,
           category: true,
             author: true,
-             style: 'grid'
+       description: false,
+             style: 'grid',
+             count: '3'
     });
 });
 
