@@ -32,10 +32,11 @@ JRss.prototype  = {
             item.description = jQuery(this).find('description').eq(0).text();
 
             //Date Formats
+            var fullmonths= ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
             var date = new Date(jQuery(this).find('pubDate').eq(0).text());
                 item.updated = jQuery(this).find('pubDate').eq(0).text();
                 item.shortdate = (date.getMonth()+1) + '/' + date.getDate() + '/' + date.getFullYear();
-
+                item.fullmonths = (fullmonths[date.getMonth()]) + ' ' + date.getDate() + ', ' + date.getFullYear();
             item.id = jQuery(this).find('guid').eq(0).text();
             item.image = jQuery(this).find('enclosure').attr('url');
             
